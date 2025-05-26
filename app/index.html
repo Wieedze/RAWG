@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Basic routing</title>
+  <script src="../dist/bundle.js"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="nav">
+      <h1><a href="#home">The Hyper Project</a></h1>
+      <a href="#pagelist">PageList</a>
+      <form class="search-form">
+        <label for="game">Nom du film :</label>
+        <input type="text" id="game" name="game" class="search-bar" placeholder="Ex : ElderScroll 5" required>
+        <div class="btn-wrapper">
+          <button type="submit" class="button">Rechercher</button>
+        </div>
+      </form>
+    </div>
+  </header>
+
+
+  <section id="pageContent">Choisissez un lien</section>
+  <div class="page-list">
+
+  </div>
+
+  <script type="module" src= "js/search.js"></script>
+  <script type="module" src="js/Home.js"></script>
+  <script type="module" src="js/PageList.js"></script>
+  <script type="module" src="js/PageDetail.js"></script>
+  <script type="module" src="js/routes.js"></script>
+  <script type="module" src="js/index.js"></script>
+</body>
+
+</html>
