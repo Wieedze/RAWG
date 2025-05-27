@@ -9,4 +9,10 @@ const routes = {
     'pagedetail': PageDetail,
 };
 
+window.addEventListener('load', () => {
+    if (!location.hash) {
+        location.hash = '#home';
+    }
+});
+
 export default routes

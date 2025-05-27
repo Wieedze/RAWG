@@ -8,26 +8,27 @@
 
 <body>
   <header class="header">
-    <div class="nav">
-      <h1><a href="#home">The Hyper Project</a></h1>
-      <a href="#pagelist">PageList</a>
-      <form class="search-form">
-        <label for="game">Nom du film :</label>
-        <input type="text" id="game" name="game" class="search-bar" placeholder="Ex : ElderScroll 5" required>
-        <div class="btn-wrapper">
-          <button type="submit" class="button">Rechercher</button>
-        </div>
-      </form>
+  <div class="nav">
+    <h1><a href="#home">The Hyper Project</a></h1>
+  </div>
+  <a href="#home">Most Anticipated</a>
+  <a href="#pagelist">Most Popular</a>
+  <form class="search-form">
+    <label for="game"></label>
+    <input type="text" id="game" name="game" class="search-bar" placeholder="Ex : ElderScroll 5" required>
+    <div class="btn-wrapper">
+      <button type="submit" class="button">Rechercher</button>
     </div>
-  </header>
+  </form>
+</header>
+  
+  
+  <section id="pageContent"></section>
 
-
-  <section id="pageContent">Choisissez un lien</section>
   <div class="page-list">
 
   </div>
 
-  <script type="module" src= "js/search.js"></script>
   <script type="module" src="js/Home.js"></script>
   <script type="module" src="js/PageList.js"></script>
   <script type="module" src="js/PageDetail.js"></script>

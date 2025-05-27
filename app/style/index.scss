@@ -12,6 +12,11 @@
     font-style: normal;
 }
 
+a {
+    color: rgb(206, 10, 50);
+    font-family: 'Big Noodles', sans-serif;
+    font-size: 200%;
+}
 p {
     color: rgb(206, 10, 50);
     font-family: 'Big Noodles', sans-serif;
@@ -29,20 +34,37 @@ h2 {
 
 body {
     background-color: rgb(30, 30, 30) !important;
+    overflow-x: hidden;
 }
 
 button {
+
     font-family: 'Big Noodles', sans-serif;
     color: rgb(206, 10, 50);
+    border: 1px solid #ccc;
+    border-radius: 12px;
 }
 
 .header {
 
     height: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+
     .nav {
         h1 {
             font-family: 'Big Noodles', sans-serif;
             color: rgb(206, 10, 50);
+            margin: 5px 0;
+            font-size: 100px;
+            height: 100px;
+        }
+
+        h3 {
+            font-family: 'Big Noodles', sans-serif;
+            color: rgb(255, 255, 255);
             margin: 5px 0;
             font-size: 100px;
             height: 100px;
@@ -55,48 +77,156 @@ button {
             text-decoration: none;
             font-weight: bold;
         }
+
+        p {
+            font-family: 'Big Noodles', sans-serif;
+            color: rgb(255, 255, 255);
+        }
+    }
+
+    .search-bar {
+        width: 80%;
+        max-width: 400px;
+        padding: 12px 16px;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-family: 'Montserrat', sans-serif;
+        margin: 10px 0 20px;
+        outline: none;
+        transition: all 0.3s ease;
+        text-align: center;
     }
 }
 
 .page-list {
-    padding: 20px;
+    padding: 100px;
 
     .games {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(3, minmax(34px, 1fr));
+        gap: 30px;
+        position: relative;
+        overflow: visible;
+        z-index: 1;
     }
 
     .card {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background: rgba(54, 53, 53, 0.813);
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(52, 52, 52, 0.15);
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        height: 680px;
+        transition: transform 0.3s ease, z-index 0.3s ease;
+        position: relative;
+        z-index: 1;
+        transform-origin: center center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.8s ease;
     }
 
-    .card-content {
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    .card.visible {
+        opacity: 1;
+        transform: translateY(0);
     }
 
+
+    .card:hover {
+        transform: scale(1.2);
+        z-index: 10;
+    }
+
+    .extra-info {
+        display: none;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgb(0, 0, 0);
+        color: #fff;
+        padding: 10px;
+        z-index: 11;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .card:hover .extra-info {
+        display: block;
+        opacity: 1;
+    }
 
     .image {
         width: 100%;
-        height: 180px;
+        height: 550px;
+
         object-fit: cover;
-        border-radius: 4px;
-        margin: 15px 0;
+        border-radius: 8px;
+        margin-bottom: 20px;
     }
 
-    h1,
+    .platform-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+
+    .ratings {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .rating-bar {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9rem;
+    }
+
+    .rating-title {
+        font-weight: bold;
+        margin-bottom: 3px;
+        color: #444;
+    }
+
+    .bar-container {
+        background-color: #eee;
+        border-radius: 6px;
+        position: relative;
+        height: 12px;
+        overflow: hidden;
+    }
+
+    .bar-fill {
+        background-color: #4caf50;
+        height: 100%;
+        transition: width 0.4s ease;
+    }
+
+    .rating-percent {
+        position: absolute;
+        right: 6px;
+        top: -2px;
+        font-size: 0.75rem;
+        color: #222;
+    }
+
+
+    h1 {
+        font-family: 'Big Noodles', sans-serif;
+        color: rgb(255, 255, 255);
+        margin: 5px 0;
+        font-size: 200%;
+    }
+
     h2 {
         font-family: 'Big Noodles', sans-serif;
-        color: rgb(206, 10, 50);
+        color: rgb(255, 255, 255);
         margin: 5px 0;
+        font-size: 100%;
     }
 
     a {
@@ -104,5 +234,24 @@ button {
         color: rgb(206, 10, 50);
         text-decoration: none;
         font-weight: bold;
+    }
+    .show-more-btn {
+        display: block;
+        margin: 40px auto;
+        padding: 20px 40px;
+        font-size: 2rem;
+        font-family: 'Big Noodles', sans-serif;
+        color: rgb(206, 10, 50);
+        background-color: transparent;
+        border: 2px solid rgb(206, 10, 50);
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .show-more-btn:hover {
+        background-color: rgb(206, 10, 50);
+        color: white;
+        transform: scale(1.05);
     }
 }
