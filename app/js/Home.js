@@ -11,6 +11,7 @@ const platformIcons = [
     { match: /Android/, icon: 'assets/icons/android.svg' },
     { match: /Web/, icon: 'assets/icons/web.svg' }
 ];
+
 const getPlatformIcon = (platformName) => {
     const match = platformIcons.find(p => p.match.test(platformName));
     return match ? match.icon : null;
@@ -65,15 +66,19 @@ function setupPagination({
     let isLastPage = false;
 
     const btn = document.createElement('button');
-    btn.textContent = "Afficher plus";
+    btn.textContent = "Show More";
     btn.style.display = 'none';
     btn.classList.add('show-more-btn');
-    container.insertAdjacentElement('afterend', btn);
+    const wrapper = document.createElement('div');
+    wrapper.style.textAlign = 'center';
+    wrapper.appendChild(btn);
+    container.insertAdjacentElement('afterend', wrapper);
+
 
     async function loadNextPage() {
         if (isLastPage) return;
         btn.disabled = true;
-        btn.textContent = "Chargement...";
+        btn.textContent = "Loading...";
         try {
             const games = await fetchPageCallback(currentPage);
             if (!games || games.length === 0) {
@@ -100,7 +105,7 @@ function setupPagination({
             btn.style.display = 'none';
         } finally {
             btn.disabled = false;
-            btn.textContent = "Afficher plus";
+            btn.textContent = "Show More";
         }
     }
 
@@ -161,6 +166,9 @@ const renderGamesBatch = (games) => {
 };
 
 const Home = () => {
+    // Variable globale pour stocker la plateforme sélectionnée
+    let selectedPlatform = '';
+
     const fetchUpcomingGamesPage = (page) => {
         const today = new Date();
         const oneYearLater = new Date(today);
@@ -169,7 +177,10 @@ const Home = () => {
         const startDate = today.toISOString().split("T")[0];
         const endDate = oneYearLater.toISOString().split("T")[0];
 
-        const url = `https://api.rawg.io/api/games?key=${API_KEY}&dates=${startDate},${endDate}&ordering=-added&page_size=9&page=${page}`;
+        // Ajout du filtre plateforme si sélectionnée
+        const platformParam = selectedPlatform ? `&platforms=${selectedPlatform}` : '';
+
+        const url = `https://api.rawg.io/api/games?key=${API_KEY}&dates=${startDate},${endDate}&ordering=-added&page_size=9&page=${page}${platformParam}`;
 
         return fetch(url)
             .then(res => res.json())
@@ -192,9 +203,57 @@ const Home = () => {
         const pageContent = document.querySelector('#pageContent');
         pageContent.innerHTML = `
             <section class="page-list">
+            <div class="texte">
+                <h2>Welcome</h2>
+                <p>
+                    The Hyper Progame is the world’s premier event for computer and video games and related products. At The Hyper Progame,
+                    the video game industry’s top talent pack the Los Angeles Convention Center, connecting tens of thousands of the best,
+                    brightest, and most innovative in the interactive entertainment industry. For three exciting days, leading-edge companies,
+                    groundbreaking new technologies, and never-before-seen products will be showcased. The Hyper Progame connects you
+                    with both new and existing partners, industry executives, gamers, and social influencers providing unprecedented exposure
+                </p>
+
+                </div>
+                <div id="filtersWrapper"></div>
                 <div class="games">Loading...</div>
             </section>
         `;
+
+        // Création du filtre plateforme (select)
+        const filtersWrapper = document.getElementById('filtersWrapper');
+        filtersWrapper.innerHTML = `
+            <div class="platform-select-wrapper">
+                <label for="platformSelect"></label>
+                <select id="platformSelect">
+                    <option value="">Platform : Any</option>
+                    <optgroup label="PC et Mobile">
+                        <option value="4">PC</option>
+                        <option value="5">macOS</option>
+                        <option value="6">Linux</option>
+                        <option value="3">iOS</option>
+                        <option value="21">Android</option>
+                        <option value="14">Web</option>
+                    </optgroup>
+                    <optgroup label="PlayStation">
+                        <option value="187">PlayStation 5</option>
+                        <option value="18">PlayStation 4</option>
+                    </optgroup>
+                    <optgroup label="Xbox">
+                        <option value="186">Xbox Series S/X</option>
+                        <option value="1">Xbox One</option>
+                    </optgroup>
+                    <optgroup label="Nintendo">
+                        <option value="7">Nintendo Switch</option>
+                    </optgroup>
+                </select>
+            </div>
+        `;
+
+        // Événement au changement de sélection : on met à jour la variable et on recharge la liste
+        document.getElementById('platformSelect').addEventListener('change', (e) => {
+            selectedPlatform = e.target.value;
+            preparePage();
+        });
 
         preparePage();
     };

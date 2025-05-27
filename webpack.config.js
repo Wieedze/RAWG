@@ -4,7 +4,7 @@ export default {
     entry: './app/index.js',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(process.cwd(), 'dist'), // __dirname n'existe pas en ESM, utilise process.cwd()
+        path: path.resolve(process.cwd(), 'dist'), 
     },
     mode: 'development',
 
