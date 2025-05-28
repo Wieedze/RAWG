@@ -42,18 +42,16 @@ const fetchGameDetail = (id) => {
         .then(res => res.json());
 };
 
-// Génère les barres de notation à partir des ratings
-function renderRating(ratings) {
-    if (!ratings || ratings.length === 0) return `<span class="no-rating">Aucune note</span>`;
-    return ratings.map(rating => `
-        <div class="rating-bar">
-            <span class="rating-title">${rating.title}</span>
-            <div class="bar-container">
-                <div class="bar-fill" style="width: ${rating.percent}%;"></div>
-                <span class="rating-percent">${rating.percent}%</span>
-            </div>
+function renderSimpleRating(rating, ratingsCount) {
+    if (!rating || ratingsCount === 0) {
+        return `<span class="no-rating">Aucune note</span>`;
+    }
+    return `
+        <div class="simple-rating">
+            <span class="average-rating"> ${rating.toFixed(2)}/5</span>
+            <span class="ratings-count">Total Vote : ${ratingsCount}</span>
         </div>
-    `).join('');
+    `;
 }
 
 // Gestion de la pagination avec bouton "Afficher plus"
@@ -183,7 +181,8 @@ const PageList = () => {
                             <h2>Éditeur : ${game.publishers?.map(pub => pub.name).join(', ') || "N/A"}</h2>
                             <h2>Date de sortie : ${game.released}</h2>
                             <h2>Genres : ${game.genres?.map(pub => pub.name).join(', ') || "N/A"}</h2>
-                            <div class="ratings">${renderRating(game.ratings)}</div>
+                            <div class="ratings">${renderSimpleRating(game.rating, game.ratings_count)}</div>
+
                         </div>
                     </div>
                     `
@@ -216,7 +215,7 @@ const PageList = () => {
         });
     };
 
-    // Affiche la structure de la page avec le filtre de plateformes + input de recherche simple
+    // Affiche la structure de la page avec le filtre de plateformes + input de recherche
     const render = () => {
         pageContent.innerHTML = `
         <section class="page-list">
@@ -261,7 +260,12 @@ const PageList = () => {
         // Rafraîchit la liste à chaque changement de filtre ou recherche
         document.getElementById('platformSelect').addEventListener('change', preparePage);
         document.getElementById('searchBtn').addEventListener('click', preparePage);
-
+        document.getElementById('searchInput')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+        e.preventDefault();
+        preparePage();
+    }
+});
         preparePage(); // Chargement initial
     };
 

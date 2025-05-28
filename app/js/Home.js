@@ -37,18 +37,18 @@ function renderPlatformIcons(platforms) {
         .join(' ');
 }
 
-function renderRating(ratings) {
-    if (!ratings || ratings.length === 0) return `<span class="no-rating">Aucune note</span>`;
-    return ratings.map(rating => `
-        <div class="rating-bar">
-            <span class="rating-title">${rating.title}</span>
-            <div class="bar-container">
-                <div class="bar-fill" style="width: ${rating.percent}%;"></div>
-                <span class="rating-percent">${rating.percent}%</span>
-            </div>
+function renderSimpleRating(rating, ratingsCount) {
+    if (!rating || ratingsCount === 0) {
+        return `<span class="no-rating">Aucune note</span>`;
+    }
+    return `
+        <div class="simple-rating">
+            <span class="average-rating">Note moyenne : ${rating.toFixed(2)}</span>
+            <span class="ratings-count">Nombre de votes : ${ratingsCount}</span>
         </div>
-    `).join('');
+    `;
 }
+
 
 function setupPagination({ 
     containerSelector,
@@ -146,7 +146,7 @@ const renderGamesBatch = (games) => {
                         <h2>Publisher: ${game.publishers?.map(pub => pub.name).join(', ') || "N/A"}</h2>
                         <h2>Released: ${game.released}</h2>
                         <h2>Rating :</h2>
-                        <div class="ratings">${renderRating(game.ratings)}</div>
+                        <div class="ratings">${renderSimpleRating(game.rating, game.ratings_count)}</div>
                     </div>
                 </div>
                 `
