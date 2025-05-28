@@ -78,10 +78,10 @@ No libraries or frameworks used; everything is vanilla JavaScript to master SPA 
 ![Homepage](screenshots/homepage.png)
 
 ### Game List  
-![Game List](screenshots/pagelist.png)
+![Game List](screenshots/pageList.png)
 
 ### Detail Page  
-![Detail Page](screenshots/pageDetail.png)
+![Detail Page](screenshots/pageDetails.png)
 
 ### Modal Carousel  
 ![Modal Carousel](screenshots/carrousel.png)
